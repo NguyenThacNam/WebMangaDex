@@ -1,0 +1,77 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+#title {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Layout chi tiết truyện */
+#cover {
+    float: left;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block !important; /* Ghi đè style inline */
+}
+
+.manga-info {
+    overflow: hidden; /* Tạo bối cảnh mới cho float */
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+/* Danh sách chương */
+#chapter-list {
+    clear: both; /* Xóa float phía trên */
+    list-style-type: none;
+    padding: 0;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#chapter-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#chapter-list li:last-child {
+    border-bottom: none;
+}
+
+#chapter-list a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+#chapter-list a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #cover {
+        float: none;
+        display: block;
+        margin: 0 auto 20px;
+    }
+    
+    .manga-info {
+        padding: 15px 0;
+    }
+}

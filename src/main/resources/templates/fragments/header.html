@@ -1,0 +1,63 @@
+<div th:fragment="siteHeader">
+
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="container">
+				<a class="navbar-brand" href="#">Manga<span>Dex</span></a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item"><a class="nav-link active"
+							th:href="@{/}"> <i class="fas fa-home me-1"></i> Trang chủ
+						</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/manga-list}"><i class="fas fa-book-open me-1"></i>
+								Danh sách truyện</a></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-bs-toggle="dropdown"> <i
+								class="fas fa-list-ul me-1"></i> Thể loại
+						</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Adventure</a></li>
+								<li><a class="dropdown-item" href="#">Comedy</a></li>
+								<li><a class="dropdown-item" href="#">Drama</a></li>
+								<li><a class="dropdown-item" href="#">Fantasy</a></li>
+							</ul></li>
+					</ul>
+					<form class="search-form d-flex" th:action="@{/search}" method="get">
+						<input class="form-control search-input" type="search"
+							name="keyword" placeholder="Tìm kiếm truyện..." required>
+						<button class="search-btn" type="submit">
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+
+					<ul class="navbar-nav ms-3">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="userDropdown"
+							role="button" data-bs-toggle="dropdown"> <i
+								class="fas fa-user-circle me-1"></i> Tài khoản
+						</a>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li><a class="dropdown-item" href="#"><i
+										class="fas fa-user me-2"></i> Profile</a></li>
+								<li><a class="dropdown-item" href="#"><i
+										class="fas fa-bookmark me-2"></i> Bookmark</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="#"><i
+										class="fas fa-sign-in-alt me-2"></i> Đăng nhập</a></li>
+								<li><a class="dropdown-item" href="#"><i
+										class="fas fa-user-plus me-2"></i> Đăng ký</a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+</div>

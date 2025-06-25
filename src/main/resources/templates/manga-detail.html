@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>MangaDetail</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
+<link rel="stylesheet" type="text/css" th:href="@{css/manga-detail.css}">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="container mt-4">
+	<div th:replace="fragments/header :: siteHeader"></div>
+	<h1 id="title">Tên truyện</h1>
+
+	<div class="manga-info">
+		<img id="cover" src="" alt="Bìa truyện" style="max-width: 200px;">
+		<div class="info-content">
+			<p>
+				<strong>Tác giả:</strong> <span id="author">Đang tải...</span>
+			</p>
+			<p>
+				<strong>Mô tả:</strong>
+			</p>
+			<p id="description">Đang tải...</p>
+		</div>
+	</div>
+
+	<h3>Danh sách chương</h3>
+	<ul id="chapter-list"></ul>
+
+	<div th:replace="fragments/footer :: siteFooter"></div>
+
+	<script th:inline="javascript">
+    const mangaId = /*[[${mangaId}]]*/ '';
+  </script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="js/manga-detail.js"></script>
+</body>
+</html>
