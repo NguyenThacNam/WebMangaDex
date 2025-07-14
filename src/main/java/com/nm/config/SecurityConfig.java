@@ -41,29 +41,31 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-    @Order(2)
-    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
-                .failureUrl("/login?error=true")
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-            )
-            .userDetailsService(loginService);
+	@Order(2)
+	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
+	    http
+	        .csrf().disable()
+	        .authorizeHttpRequests(auth -> auth
+	            .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**", "/").permitAll()
+	            .anyRequest().authenticated()
+	        )
+	        .formLogin(form -> form
+	            .loginPage("/login")
+	            .loginProcessingUrl("/login")
+	            .defaultSuccessUrl("/", true)
+	            .failureUrl("/login?error=true")
+	            .permitAll()
+	        )
+	        .logout(logout -> logout
+	            .logoutUrl("/logout")
+	            .logoutSuccessUrl("/")
+	            .invalidateHttpSession(true)
+	            .deleteCookies("JSESSIONID")
+	            .permitAll()
+	        )
+	        .userDetailsService(loginService);
 
-        return http.build();
-    }
+	    return http.build();
+	}
+
 }

@@ -29,7 +29,8 @@
 								<li><a class="dropdown-item" href="#">Fantasy</a></li>
 							</ul></li>
 					</ul>
-					<form class="search-form d-flex" th:action="@{/search}" method="get">
+					<form class="search-form d-flex" th:action="@{/search}"
+						method="get">
 						<input class="form-control search-input" type="search"
 							name="keyword" placeholder="Tìm kiếm truyện..." required>
 						<button class="search-btn" type="submit">
@@ -49,12 +50,28 @@
 								<li><a class="dropdown-item" href="#"><i
 										class="fas fa-bookmark me-2"></i> Bookmark</a></li>
 								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="#"><i
+
+								<!-- Chưa đăng nhập -->
+								<li sec:authorize="!isAuthenticated()"><a
+									class="dropdown-item" th:href="@{/login}"><i
 										class="fas fa-sign-in-alt me-2"></i> Đăng nhập</a></li>
-								<li><a class="dropdown-item" href="#"><i
+								<li sec:authorize="!isAuthenticated()"><a
+									class="dropdown-item" th:href="@{/register}"><i
 										class="fas fa-user-plus me-2"></i> Đăng ký</a></li>
-							</ul></li>
-					</ul>
+
+								<!-- Đã đăng nhập -->
+								<li sec:authorize="isAuthenticated()">
+								<span
+									sec:authorize="isAuthenticated()"> Xin chào: <strong
+										sec:authentication="name"></strong>
+								</span>
+									<form th:action="@{/logout}" method="post" style="margin: 0;">
+										<button type="submit" class="dropdown-item">
+											<i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
+										</button>
+									</form>
+								</li>
+							</ul>
 				</div>
 			</div>
 		</nav>

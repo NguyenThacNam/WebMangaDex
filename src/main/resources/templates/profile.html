@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>MangaDetail</title>
@@ -13,32 +14,31 @@
 </head>
 <body class="container mt-4">
 	<div th:replace="fragments/header :: siteHeader"></div>
-	<h1 id="title">Tên truyện</h1>
-
-	<div class="manga-info">
-		<img id="cover" src="" alt="Bìa truyện" style="max-width: 200px;">
-		<div class="info-content">
-			<p>
-				<strong>Tác giả:</strong> <span id="author">Đang tải...</span>
-			</p>
-			<p>
-				<strong>Mô tả:</strong>
-			</p>
-			<p id="description">Đang tải...</p>
-		</div>
+	<div class="container mt-5">
+		<h2>Thông tin tài khoản</h2>
+		<table class="table table-bordered">
+			<tr>
+				<th>Tên đăng nhập</th>
+				<td th:text="${user.username}">Tên đăng nhập</td>
+			</tr>
+			<tr>
+				<th>Họ tên</th>
+				<td th:text="${user.name}">Họ tên</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td th:text="${user.email}">Email</td>
+			</tr>
+			<tr>
+				<th>Vai trò</th>
+				<td th:text="${user.role}">ROLE_USER</td>
+			</tr>
+		</table>
+		<a th:href="@{/}" class="btn btn-primary">Quay lại trang chủ</a>
 	</div>
-
-	<h3>Danh sách chương</h3>
-	<ul id="chapter-list"></ul>
-
 	<div th:replace="fragments/footer :: siteFooter"></div>
-
-	<script th:inline="javascript">
-    const mangaId = /*[[${mangaId}]]*/ '';
-  </script>
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="js/manga-detail.js"></script>
+
 </body>
 </html>

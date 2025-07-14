@@ -26,7 +26,7 @@ public class AuthController {
 
 	@GetMapping("/register")
 	public String Register(Model model) {
-		model.addAttribute("Users", new Users());
+		model.addAttribute("users", new Users());
 		return "register";
 	}
 
@@ -37,6 +37,7 @@ public class AuthController {
 			return "register";
 		}
 		users.setPassword(passwordEncoder.encode(users.getPassword()));
+		users.setRole("ROLE_USER"); 
 		userRepo.save(users);
 
 		model.addAttribute("success", "Đăng ký thành công!");
