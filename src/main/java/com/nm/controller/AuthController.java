@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.nm.entity.Users;
 import com.nm.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class AuthController {
 
@@ -44,4 +46,7 @@ public class AuthController {
 		return "login";
 
 	}
+
+
+
 }

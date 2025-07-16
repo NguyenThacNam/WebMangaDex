@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Chi tiết truyện</title>
@@ -19,16 +20,41 @@
 	<h2 id="chapter-title">Đang tải chương...</h2>
 	<p id="manga-title" class="text-muted mb-3">Tên truyện</p>
 
-	
+
 
 	<div id="image-container"></div>
 
-    <div class="mb-4" id="navigation">
+	<div class="mb-4" id="navigation">
 		<a id="prev-btn" class="btn btn-secondary me-2" href="#"
 			style="display: none;">← Chương trước</a> <a id="next-btn"
 			class="btn btn-secondary ms-2" href="#" style="display: none;">Chương
 			sau →</a>
 	</div>
+
+	<h3 class="mt-4">💬 Bình luận chương</h3>
+
+	<div id="chapter-comment-section">
+		<!-- Danh sách bình luận sẽ được render ở đây -->
+	</div>
+	<p id="chapter-no-comment" class="text-muted" style="display: none;">Chưa
+		có bình luận nào.</p>
+
+	<!-- Form bình luận -->
+	<div sec:authorize="isAuthenticated()">
+		<form id="chapter-comment-form" class="mb-3">
+			<div class="mb-2">
+				<textarea id="chapter-comment-content" class="form-control" rows="3"
+					placeholder="Nhập bình luận..."></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Gửi bình luận</button>
+		</form>
+	</div>
+	<div sec:authorize="!isAuthenticated()">
+		<p>
+			🔒 Vui lòng <a th:href="@{/login}">đăng nhập</a> để bình luận.
+		</p>
+	</div>
+
 	<div th:replace="fragments/footer :: siteFooter"></div>
 
 
@@ -36,5 +62,10 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/read-chapter.js"></script>
+	<script th:inline="javascript">
+    const chapterId = /*[[${chapterId}]]*/ '';
+</script>
+<script src="js/chapter-comments.js"></script>
+	
 </body>
 </html>

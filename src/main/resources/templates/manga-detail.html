@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>MangaDetail</title>
@@ -30,6 +31,28 @@
 
 	<h3>Danh sách chương</h3>
 	<ul id="chapter-list"></ul>
+
+	<div id="comment-section">
+		<!-- Danh sách bình luận sẽ được chèn ở đây -->
+	</div>
+
+	<p id="no-comment" class="text-muted" style="display: none;">Chưa
+		có bình luận nào.</p>
+	<div sec:authorize="isAuthenticated()">
+		<form id="comment-form" class="mb-3">
+			<div class="mb-2">
+				<textarea id="comment-content" class="form-control" rows="3"
+					placeholder="Nhập bình luận..."></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Gửi bình luận</button>
+		</form>
+	</div>
+	<div sec:authorize="!isAuthenticated()">
+		<p>
+			🔒 Vui lòng <a th:href="@{/login}">đăng nhập</a> để bình luận.
+		</p>
+	</div>
+
 
 	<div th:replace="fragments/footer :: siteFooter"></div>
 

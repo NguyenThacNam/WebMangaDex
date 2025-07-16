@@ -50,3 +50,60 @@ if (!mangaId) {
      .catch(err => {
        console.error("Lỗi khi lấy danh sách chương:", err);
      });
+	 document.addEventListener("DOMContentLoaded", () => {
+	     loadComments();
+
+	     const form = document.getElementById("comment-form");
+	     form?.addEventListener("submit", function (e) {
+	         e.preventDefault();
+	         const content = document.getElementById("comment-content").value.trim();
+	         if (!content) return;
+
+	         fetch('/api/comments', {
+	             method: 'POST',
+	             headers: {
+	                 'Content-Type': 'application/json'
+	             },
+				 credentials: 'same-origin',
+	             body: JSON.stringify({
+	                 mangaId: mangaId,
+	                 content: content
+	             })
+	         })
+	         .then(res => {
+	             if (!res.ok) throw new Error("Bạn cần đăng nhập để bình luận.");
+	             return res.json();
+	         })
+	         .then(() => {
+	             document.getElementById("comment-content").value = '';
+	             loadComments();
+	         })
+	         .catch(err => alert(err.message));
+	     });
+	 });
+
+	 function loadComments() {
+	     fetch(`/api/comments/manga/${mangaId}`)
+	         .then(res => res.json())
+	         .then(comments => {
+	             const section = document.getElementById("comment-section");
+	             const noComment = document.getElementById("no-comment");
+	             section.innerHTML = '';
+
+	             if (comments.length === 0) {
+	                 noComment.style.display = 'block';
+	             } else {
+	                 noComment.style.display = 'none';
+	                 comments.forEach(c => {
+	                     const div = document.createElement('div');
+	                     div.className = 'mb-2 border-bottom pb-2';
+	                     div.innerHTML = `
+	                         <strong>${c.user.username}</strong>: ${c.content}
+	                         <br>
+	                         <small>${new Date(c.createdAt).toLocaleString()}</small>
+	                     `;
+	                     section.appendChild(div);
+	                 });
+	             }
+	         });
+	 }
