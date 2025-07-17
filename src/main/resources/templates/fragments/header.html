@@ -47,8 +47,10 @@
 							<ul class="dropdown-menu dropdown-menu-end">
 								<li><a class="dropdown-item" href="#"><i
 										class="fas fa-user me-2"></i> Profile</a></li>
-								<li><a class="dropdown-item" href="#"><i
-										class="fas fa-bookmark me-2"></i> Bookmark</a></li>
+								<li><a class="dropdown-item" th:href="@{/favorites}"> <i
+										class="fas fa-bookmark me-2"></i> Truyện đã yêu thích
+								</a></li>
+
 								<li><hr class="dropdown-divider"></li>
 
 								<!-- Chưa đăng nhập -->
@@ -60,8 +62,7 @@
 										class="fas fa-user-plus me-2"></i> Đăng ký</a></li>
 
 								<!-- Đã đăng nhập -->
-								<li sec:authorize="isAuthenticated()">
-								<span
+								<li sec:authorize="isAuthenticated()"><span
 									sec:authorize="isAuthenticated()"> Xin chào: <strong
 										sec:authentication="name"></strong>
 								</span>
@@ -69,8 +70,7 @@
 										<button type="submit" class="dropdown-item">
 											<i class="fas fa-sign-out-alt me-2"></i> Đăng xuất
 										</button>
-									</form>
-								</li>
+									</form></li>
 							</ul>
 				</div>
 			</div>

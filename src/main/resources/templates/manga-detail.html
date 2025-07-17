@@ -25,7 +25,34 @@
 			<p>
 				<strong>Mô tả:</strong>
 			</p>
+			<div sec:authorize="isAuthenticated()">
+				<!-- Nếu đã yêu thích -->
+				<form th:if="${isFavorited}" action="/favorites/remove"
+					method="post">
+					<input type="hidden" name="id" th:value="${mangaId}" />
+					<button type="submit" class="btn btn-danger mt-2">
+						<i class="fas fa-star"></i> Bỏ yêu thích
+					</button>
+				</form>
+
+				<!-- Nếu chưa yêu thích -->
+				<form th:if="${!isFavorited}" action="/favorites/add" method="post">
+					<input type="hidden" name="id" th:value="${mangaId}" />
+					<button type="submit" class="btn btn-outline-warning mt-2">
+						<i class="fas fa-star"></i> Thêm vào yêu thích
+					</button>
+				</form>
+
+			</div>
+			<div sec:authorize="!isAuthenticated()">
+				<p class="text-muted mt-2">
+					🔒 Vui lòng <a th:href="@{/login}">đăng nhập</a> để thêm vào danh
+					sách yêu thích.
+				</p>
+			</div>
+
 			<p id="description">Đang tải...</p>
+
 		</div>
 	</div>
 
@@ -57,8 +84,8 @@
 	<div th:replace="fragments/footer :: siteFooter"></div>
 
 	<script th:inline="javascript">
-    const mangaId = /*[[${mangaId}]]*/ '';
-  </script>
+		const mangaId = /*[[${mangaId}]]*/'';
+	</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

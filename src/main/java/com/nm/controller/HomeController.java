@@ -2,6 +2,8 @@ package com.nm.controller;
 
 import java.security.Principal;
 import com.nm.service.NotificationService;
+import com.nm.service.UserFavoriteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,17 +24,30 @@ public class HomeController {
 	
 	@Autowired
 	private NotificationService notificationService;
+     
+	@Autowired
+	private UserFavoriteService favoriteService;
 
    
 	@GetMapping("")
 	public String Home() {
 		return "home";
 	}
-	  @GetMapping("/manga-detail")
-	    public String showMangaDetailPage(@RequestParam String id, Model model) {
-	        model.addAttribute("mangaId", id);
-	        return "manga-detail";
+	@GetMapping("/manga-detail")
+	public String showMangaDetailPage(@RequestParam String id, Model model, Principal principal) {
+	    model.addAttribute("mangaId", id);
+
+	    if (principal != null) {
+	        Users user = userRepo.findByUsername(principal.getName());
+	        boolean isFavorited = favoriteService.isFavorited(user, id);
+	        model.addAttribute("isFavorited", isFavorited);
+	    } else {
+	        model.addAttribute("isFavorited", false);
 	    }
+
+	    return "manga-detail";
+	}
+
 	  
 	  @GetMapping("/read-chapter.html")
 	  public String readChapter() {
