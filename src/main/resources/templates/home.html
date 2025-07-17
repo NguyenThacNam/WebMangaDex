@@ -37,11 +37,16 @@
 								class="fas fa-list-ul me-1"></i> Thể loại
 						</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Action</a></li>
-								<li><a class="dropdown-item" href="#">Adventure</a></li>
-								<li><a class="dropdown-item" href="#">Comedy</a></li>
-								<li><a class="dropdown-item" href="#">Drama</a></li>
-								<li><a class="dropdown-item" href="#">Fantasy</a></li>
+								<li><a class="dropdown-item"
+									th:href="@{/manga-category(genre='action')}">Action</a></li>
+								<li><a class="dropdown-item"
+									th:href="@{/manga-category(genre='adventure')}">Adventure</a></li>
+								<li><a class="dropdown-item"
+									th:href="@{/manga-category(genre='comedy')}">Comedy</a></li>
+								<li><a class="dropdown-item"
+									th:href="@{/manga-category(genre='drama')}">Drama</a></li>
+								<li><a class="dropdown-item"
+									th:href="@{/manga-category(genre='fantasy')}">Fantasy</a></li>
 							</ul></li>
 					</ul>
 					<form class="search-form d-flex" th:action="@{/search}"
@@ -61,8 +66,9 @@
 							<ul class="dropdown-menu dropdown-menu-end">
 								<li><a class="dropdown-item" th:href="@{/profile}"><i
 										class="fas fa-user me-2"></i> Profile</a></li>
-								<li><a class="dropdown-item" href="#"><i
-										class="fas fa-bookmark me-2"></i> Bookmark</a></li>
+								<li><a class="dropdown-item" th:href="@{/favorites}"> <i
+										class="fas fa-bookmark me-2"></i> BookMark
+								</a></li>
 								<li><hr class="dropdown-divider"></li>
 
 								<!-- Chưa đăng nhập -->

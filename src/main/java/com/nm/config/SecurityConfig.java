@@ -54,7 +54,7 @@ public class SecurityConfig {
 	                    "/login", "/register", 
 	                    "/css/**", "/js/**", "/images/**",
 	                    "/", "/manga-detail", "/read-chapter.html", 
-	                    "/manga-list", "/search"
+	                    "/manga-list", "/search" , "/manga-category"
 	                ).permitAll()
 	                .anyRequest().authenticated()
 	            )
