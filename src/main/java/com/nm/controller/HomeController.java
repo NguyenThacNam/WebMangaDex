@@ -1,7 +1,7 @@
 package com.nm.controller;
 
 import java.security.Principal;
-
+import com.nm.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +13,17 @@ import com.nm.repository.UserRepository;
 
 @Controller
 public class HomeController {
+
 	
 	
 	@Autowired
 	private UserRepository userRepo;
     
+	
+	@Autowired
+	private NotificationService notificationService;
+
+   
 	@GetMapping("")
 	public String Home() {
 		return "home";
@@ -45,12 +51,18 @@ public class HomeController {
 	  }
       
 	  @GetMapping("/profile")
-	    public String profilePage(Model model, Principal principal) {
-	        String username = principal.getName(); // Lấy username từ session hiện tại
-	        Users user = userRepo.findByUsername(username);
-	        model.addAttribute("user", user);
-	        return "profile"; // file profile.html
-	    }
+	  public String profilePage(Model model, Principal principal) {
+	      String username = principal.getName(); // Lấy username từ session hiện tại
+	      Users user = userRepo.findByUsername(username);
+	      model.addAttribute("user", user);
+
+	      // Thêm danh sách thông báo
+	      model.addAttribute("notifications", notificationService.getNotificationsByUser(user));
+	      model.addAttribute("unreadCount", notificationService.countUnread(user));
+
+	      return "profile"; // file profile.html
+	  }
+
 
 
 	

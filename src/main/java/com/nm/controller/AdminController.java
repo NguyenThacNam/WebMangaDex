@@ -8,14 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nm.entity.Users;
 import com.nm.repository.UserRepository;
+import com.nm.service.UserService;
 
 @RequestMapping("admin")
 @Controller
 public class AdminController {
+    
+	@Autowired
+	private UserService userService;
 
+	
 	@Autowired
 	private UserRepository userRepo;
 
@@ -45,4 +51,23 @@ public class AdminController {
 		userRepo.save(users);
 		return "redirect:/admin/login";
 	}
+	@GetMapping("/users")
+	public String allUsers(Model model) {
+	    model.addAttribute("users", userService.getAllUsers());
+	    return "admin/users"; // View: users.html
+	}
+	@PostMapping("/lock-user")
+	public String lockUser(@RequestParam("id") Long id, @RequestParam("hours") int hours) {
+	    userService.lockUser(id, hours);
+	    return "redirect:/admin/users";
+	}
+	
+	@PostMapping("/unlock-user")
+	public String unlockUser(@RequestParam("id") Long id) {
+	    userService.unlockUser(id);
+	    return "redirect:/admin/users";
+	}
+
+
+
 }

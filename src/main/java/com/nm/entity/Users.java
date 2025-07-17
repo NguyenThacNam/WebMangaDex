@@ -1,88 +1,97 @@
 package com.nm.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 public class Users {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	private String name;
-	private String username;
-	private String password;
-	private String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "role")
-	private String role;
+    private String name;
+    private String username;
+    private String password;
+    private String email;
 
-	public Users() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    @Column(name = "role")
+    private String role;
 
-	public Users(Long id, String name, String usename, String password, String email, String role) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-	}
+    private LocalDateTime lockedUntil;
 
-	public Long getId() {
-		return id;
-	}
+    // Constructors
+    public Users() {}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Users(Long id, String name, String username, String password, String email, String role) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
 
-	public String getName() {
-		return name;
-	}
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setUsername(String usename) {
-		this.username = usename;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public LocalDateTime getLockedUntil() {
+        return lockedUntil;
+    }
+
+    public void setLockedUntil(LocalDateTime lockedUntil) {
+        this.lockedUntil = lockedUntil;
+    }
+
+    // Kiểm tra trạng thái khóa
+    public boolean isLocked() {
+        return lockedUntil != null && lockedUntil.isAfter(LocalDateTime.now());
+    }
 }

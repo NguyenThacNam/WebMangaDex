@@ -8,13 +8,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.nm.security.CustomAuthenticationFailureHandler;
 import com.nm.service.LoginService;
 
 @Configuration
 public class SecurityConfig {
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private CustomAuthenticationFailureHandler failureHandler;
 
+	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -40,35 +45,36 @@ public class SecurityConfig {
 		return http.build();
 	}
 	
-	@Bean
-	@Order(2)
-	public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
-	    http
-	        .csrf().disable()
-	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/login", "/register", "/css/**", "/js/**", "/images/**","/manga-detail", 
-	                    "/read-chapter.html",
-	                    "/manga-list", 
-	                    "/search", "/").permitAll()
-	            .anyRequest().authenticated()
-	        )
-	        .formLogin(form -> form
-	            .loginPage("/login")
-	            .loginProcessingUrl("/login")
-	            .defaultSuccessUrl("/", true)
-	            .failureUrl("/login?error=true")
-	            .permitAll()
-	        )
-	        .logout(logout -> logout
-	            .logoutUrl("/logout")
-	            .logoutSuccessUrl("/")
-	            .invalidateHttpSession(true)
-	            .deleteCookies("JSESSIONID")
-	            .permitAll()
-	        )
-	        .userDetailsService(loginService);
+	 @Bean
+	    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) throws Exception {
+	        http
+	            .csrf().disable()
+	            .authorizeHttpRequests(auth -> auth
+	                .requestMatchers(
+	                    "/login", "/register", 
+	                    "/css/**", "/js/**", "/images/**",
+	                    "/", "/manga-detail", "/read-chapter.html", 
+	                    "/manga-list", "/search"
+	                ).permitAll()
+	                .anyRequest().authenticated()
+	            )
+	            .formLogin(form -> form
+	                .loginPage("/login")
+	                .loginProcessingUrl("/login")
+	                .defaultSuccessUrl("/", true)
+	                .failureHandler(failureHandler) // xử lý lỗi cụ thể
+	                .permitAll()
+	            )
+	            .logout(logout -> logout
+	                .logoutUrl("/logout")
+	                .logoutSuccessUrl("/")
+	                .invalidateHttpSession(true)
+	                .deleteCookies("JSESSIONID")
+	                .permitAll()
+	            )
+	            .userDetailsService(loginService);
 
-	    return http.build();
-	}
+	        return http.build();
+	    }
 
 }

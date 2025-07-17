@@ -29,6 +29,10 @@ public class LoginService implements UserDetailsService {
 		if (users == null) {
 	        throw new UsernameNotFoundException("Không tìm thấy người dùng");
 	    }
+		
+		 if (users.isLocked()) {
+		        throw new RuntimeException("Tài khoản của bạn đã bị khóa đến " + users.getLockedUntil());
+		    }
 
 		return new org.springframework.security.core.userdetails.User(
 			    users.getUsername(),

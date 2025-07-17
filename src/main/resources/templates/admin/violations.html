@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="main">
+<h1>Danh sách vi phạm của <span th:text="${user.username}"></span></h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Lý do</th>
+                <th>Thời gian</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vio : ${violations}">
+                <td th:text="${vio.reason}"></td>
+                <td th:text="${vio.createdAt}"></td>
+            </tr>
+        </tbody>
+    </table>
+ 
+</div>
+</body>
+</html>

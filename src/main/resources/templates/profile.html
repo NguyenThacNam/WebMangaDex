@@ -35,6 +35,24 @@
 			</tr>
 		</table>
 		<a th:href="@{/}" class="btn btn-primary">Quay lại trang chủ</a>
+		<div class="mt-5">
+			<h3>
+				Hộp thư của bạn <span class="badge bg-danger"
+					th:text="${unreadCount}"></span>
+			</h3>
+			<ul class="list-group">
+				<li class="list-group-item" th:each="noti : ${notifications}">
+					<span th:text="${noti.message}"></span> <small class="text-muted"
+					th:text="${#temporals.format(noti.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+					<span th:if="${!noti.read}" class="badge bg-warning text-dark">Chưa
+						đọc</span>
+				</li>
+			</ul>
+			<a th:href="@{'/inbox?username=' + ${user.username}}"
+				class="btn btn-outline-primary mt-3"> Xem tất cả thông báo </a>
+		</div>
+
+
 	</div>
 	<div th:replace="fragments/footer :: siteFooter"></div>
 	<script

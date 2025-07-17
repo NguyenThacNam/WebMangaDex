@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/admin">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+    
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    thead {
+        background-color: #4a76a8;
+        color: white;
+    }
+    
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+        font-weight: 600;
+    }
+    
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    
+    select {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+    
+    button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    button[type="submit"] {
+        background-color: #e74c3c;
+        color: white;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #c0392b;
+    }
+    
+    form {
+        display: inline-block;
+        margin-right: 5px;
+    }
+    
+    form:last-child button {
+        background-color: #2ecc71;
+    }
+    
+    form:last-child button:hover {
+        background-color: #27ae60;
+    }
+    
+    td:last-child {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        td:last-child {
+            flex-direction: column;
+        }
+    }
+</style>
+</head>
+<body>
+	<div layout:fragment="main">
+		<h1>Danh sách người dùng</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>Email</th>
+					<th>Trạng thái</th>
+					<th>Khóa/Mở khóa</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.username}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.isLocked() ? 'Đang bị khóa' : 'Hoạt động'}"></td>
+					<td>
+						<form th:action="@{/admin/lock-user}" method="post">
+							<input type="hidden" name="id" th:value="${user.id}" /> 
+							<select name="hours">
+								<option value="1">1 giờ</option>
+								<option value="6">6 giờ</option>
+								<option value="24">24 giờ</option>
+							</select>
+							<button type="submit">Khóa</button>
+						</form>
+
+						<form th:action="@{/admin/unlock-user}" method="post">
+							<input type="hidden" name="id" th:value="${user.id}" />
+							<button type="submit">Mở khóa</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
